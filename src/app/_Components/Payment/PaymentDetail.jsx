@@ -7,7 +7,7 @@ import PaymentPagHeader from "./PaymentPagHeader";
 
 async function getPaymentData(id) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}paymentLink/${id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}paymentlink/${id}`,
     {
       cache: "no-store", // Taake hamesha fresh data aaye
     },
