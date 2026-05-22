@@ -10,9 +10,9 @@ const PayPalButton = ({
   amount,
   onSuccess,
   onError,
+  brandParam,
   className = "",
 }) => {
-
   const paypalRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -37,7 +37,7 @@ const PayPalButton = ({
         setError("Failed to load PayPal SDK");
         setIsLoading(false);
       };
-      
+
       document.head.appendChild(script);
     };
 
@@ -55,9 +55,7 @@ const PayPalButton = ({
               setIsProcessing(true);
 
               try {
-             
-
-                let payload = { id };
+                let payload = { id, brand: brandParam };
 
                 const response = await fetch(
                   `${process.env.NEXT_PUBLIC_API_URL}paymentlink/pay-with-paypal`,
@@ -67,7 +65,7 @@ const PayPalButton = ({
                       "Content-Type": "application/json",
                     },
                     body: JSON.stringify(payload),
-                  }
+                  },
                 );
 
                 const data = await response.json();
@@ -75,7 +73,7 @@ const PayPalButton = ({
 
                 if (!response.ok) {
                   throw new Error(
-                    data.message || "Failed to create PayPal order"
+                    data.message || "Failed to create PayPal order",
                   );
                 }
 
@@ -88,21 +86,21 @@ const PayPalButton = ({
               }
             },
 
-            onApprove: async (data) => {  
+            onApprove: async (data) => {
               try {
-                console.log(data,'--->>>onApprove')
+                console.log(data, "--->>>onApprove");
                 const token = Cookies.get("token");
-                let payload = { id };
+                let payload = { id, brand: brandParam };
                 const response = await fetch(
                   `${process.env.NEXT_PUBLIC_API_URL}paymentlink/pay-with-paypal/${data.orderID}/charge`,
                   {
                     method: "POST",
-                   
+
                     headers: {
                       "Content-Type": "application/json",
                     },
                     body: JSON.stringify(payload),
-                  }
+                  },
                 );
 
                 const details = await response.json();
@@ -113,7 +111,7 @@ const PayPalButton = ({
 
                 setIsProcessing(false);
                 toast.success(
-                  `Payment successful! Status: ${details.data.status}`
+                  `Payment successful! Status: ${details.data.status}`,
                 );
 
                 if (onSuccess) {
@@ -131,8 +129,8 @@ const PayPalButton = ({
             },
 
             onError: (err) => {
-              console.error('PayPal onError callback:', err);
-              toast.error(err?.data?.message || 'PayPal payment failed');
+              console.error("PayPal onError callback:", err);
+              toast.error(err?.data?.message || "PayPal payment failed");
               setIsProcessing(false);
 
               if (onError) {
@@ -185,11 +183,10 @@ const PayPalButton = ({
         </div>
       </div>
     );
-  } 
+  }
 
   return (
     <div className={`relative ${className}`}>
-    
       <div className="relative">
         {isLoading && (
           <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center rounded-xl">
