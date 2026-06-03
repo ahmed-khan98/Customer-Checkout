@@ -11,6 +11,7 @@ const PayPalButton = ({
   onSuccess,
   onError,
   brandParam,
+  currency,
   className = "",
 }) => {
   const paypalRef = useRef(null);
@@ -27,7 +28,7 @@ const PayPalButton = ({
 
       const script = document.createElement("script");
 
-      script.src = `https://www.paypal.com/sdk/js?client-id=${paypalClientId}`;
+      script.src = `https://www.paypal.com/sdk/js?client-id=${paypalClientId}&currency=${currency}`;
 
       script.onload = () => {
         initializePayPal();
