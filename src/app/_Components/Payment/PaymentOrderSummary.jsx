@@ -10,6 +10,7 @@ const currencySymbols = {
 };
 
 const PaymentOrderSummary = ({
+  isMasterPayemntLink,
   name,
   email,
   brand,
@@ -36,7 +37,7 @@ const PaymentOrderSummary = ({
         </div>
 
         <div className="space-y-1">
-          {name && (
+          {!isMasterPayemntLink && (
             <div className=" p-4 grid grid-cols-1 sm:grid-cols-2 gap-y-3 border-b border-zinc-100">
               {/* Agar name or email null/falsy hain to component hide ho jaye ga */}
               {name && <DetailRow label="Customer" value={name} />}
@@ -54,7 +55,7 @@ const PaymentOrderSummary = ({
             </div>
           )}
 
-          <div className={name ? "px-4 py-2" : "p-1"}>
+          <div className={!isMasterPayemntLink ? "px-4 py-2" : "p-6"}>
             <p className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-500 mb-2 uppercase tracking-wider">
               <Tag className="w-3 h-3" /> Services Provided
             </p>
@@ -80,7 +81,7 @@ const PaymentOrderSummary = ({
               )}
             </div>
           </div>
-          {description && (
+          {(!isMasterPayemntLink && description) && (
             <div className="px-4 py-3 border-t border-zinc-100">
               <p className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-500 mb-2 uppercase tracking-widest">
                 <FileText className="w-3 h-3" /> Description

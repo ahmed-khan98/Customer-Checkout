@@ -13,10 +13,9 @@ const getCurrencyPrefix = (currency) => {
   }
 };
 
-const PaidPaymentLink = ({ currency, amount, name, email, brand, service, description }) => {
+const PaidPaymentLink = ({ isMasterPayemntLink,currency, amount, name, email, brand, service, description }) => {
   const sym      = getCurrencyPrefix(currency);
   const services = Array.isArray(service) ? service : service ? [service] : [];
-
   return (
     <Screen>
       <div className="max-w-md w-full">
@@ -56,10 +55,10 @@ const PaidPaymentLink = ({ currency, amount, name, email, brand, service, descri
 
             {/* Customer info */}
             <div className="border border-zinc-100 rounded-xl overflow-hidden divide-y divide-zinc-100">
-              {name && (
+              {(!isMasterPayemntLink && name) && (
               <SuccessRow icon={User} label="Customer Name" value={name} />
               )}
-              {email && (
+              {(!isMasterPayemntLink && email) && (
               <SuccessRow icon={Mail} label="Email" value={email} />
               )}
               {brand && (
@@ -87,7 +86,7 @@ const PaidPaymentLink = ({ currency, amount, name, email, brand, service, descri
             )}
 
             {/* Description */}
-            {description && (
+            {(!isMasterPayemntLink && description) && (
               <div className="pt-4">
                 <p className="flex items-center gap-1.5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-2">
                   <FileText className="w-3 h-3" /> Description

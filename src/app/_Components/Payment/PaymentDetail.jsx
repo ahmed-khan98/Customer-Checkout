@@ -83,8 +83,6 @@
 
 // export default PaymentDetail;
 
-
-
 import ErrorState from "./ErrorState";
 import PaymentDetailPayPal from "./PaymentDetailPayPal";
 import PaidPaymentLink from "./PaidPaymentLink";
@@ -143,6 +141,7 @@ const PaymentDetail = async ({ id, searchParams }) => {
       amount: dynamicAmount,
       currency: "USD",
       service: ["Promotional Publishing Package"],
+      isMasterPayemntLink: true,
       name: null,
       email: null,
       phoneNo: null,
@@ -168,6 +167,7 @@ const PaymentDetail = async ({ id, searchParams }) => {
   if (paymentData?.paymentStatus === "paid")
     return (
       <PaidPaymentLink
+        isMasterPayemntLink={paymentData?.isMasterPayemntLink}
         currency={paymentData?.currency}
         amount={paymentData?.amount}
         name={paymentData?.name}
@@ -175,7 +175,6 @@ const PaymentDetail = async ({ id, searchParams }) => {
         brand={paymentData?.brandId?.name}
         service={paymentData?.service}
         description={paymentData?.description}
-        
       />
     );
 
@@ -192,6 +191,7 @@ const PaymentDetail = async ({ id, searchParams }) => {
           {/* LEFT: Invoice Summary */}
           <div className="lg:col-span-7 lg:h-full lg:overflow-y-auto space-y-4">
             <PaymentOrderSummary
+              isMasterPayemntLink={paymentData?.isMasterPayemntLink}
               name={paymentData?.name}
               email={paymentData?.email}
               brand={
@@ -216,7 +216,6 @@ const PaymentDetail = async ({ id, searchParams }) => {
                 paypalClientId={paymentData?.paypalClientId}
                 brandParam={brandParam}
                 currency={paymentData?.currency}
-
               />
             </div>
           </div>
@@ -230,7 +229,6 @@ const PaymentDetail = async ({ id, searchParams }) => {
                 paypalClientId={paymentData?.paypalClientId}
                 brandParam={brandParam}
                 currency={paymentData?.currency}
-                
               />
             </div>
           </aside>
@@ -241,4 +239,3 @@ const PaymentDetail = async ({ id, searchParams }) => {
 };
 
 export default PaymentDetail;
-

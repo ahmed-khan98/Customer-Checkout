@@ -28,7 +28,7 @@ export default function PayPalClientWrapper({ id, paypalClientId, brandParam, cu
       </div>
 
       {/* ── Trust badges ── */}
-      <div className="flex items-center justify-center gap-3 px-2 py-4 border-b border-zinc-100 bg-zinc-50/50">
+      <div className="flex items-center justify-center gap-3 px-2 py-3 border-b border-zinc-100 bg-zinc-50/50">
         <span className="flex items-center gap-1.5 text-[10px] font-semibold text-zinc-500">
           <Lock className="w-3 h-3 text-emerald-500" />
           SSL Secured
