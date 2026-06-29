@@ -170,8 +170,8 @@ const PaymentDetail = async ({ id, searchParams }) => {
         isMasterPayemntLink={paymentData?.isMasterPayemntLink}
         currency={paymentData?.currency}
         amount={paymentData?.amount}
-        name={paymentData?.name}
-        email={paymentData?.email}
+        name={paymentData?.clientId?.name || paymentData?.name}
+        email={paymentData?.clientId?.email || paymentData?.email}
         brand={paymentData?.brandId?.name}
         service={paymentData?.service}
         description={paymentData?.description}
@@ -192,8 +192,8 @@ const PaymentDetail = async ({ id, searchParams }) => {
           <div className="lg:col-span-7 lg:h-full lg:overflow-y-auto space-y-4">
             <PaymentOrderSummary
               isMasterPayemntLink={paymentData?.isMasterPayemntLink}
-              name={paymentData?.name}
-              email={paymentData?.email}
+              name={paymentData?.clientId?.name || paymentData?.name}
+              email={paymentData?.clientId?.email || paymentData?.email}
               brand={
                 isMasterLink
                   ? paymentData?.brandNameForSummary
