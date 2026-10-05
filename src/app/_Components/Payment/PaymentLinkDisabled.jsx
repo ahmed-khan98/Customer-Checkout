@@ -32,11 +32,11 @@ const PaymentLinkDisabled = ({ paymentData }) => {
             <div className="mt-3 space-y-3 text-xs text-slate-600">
               <div className="flex justify-between">
                 <span>Customer</span>
-                <span>{paymentData?.name || "N/A"}</span>
+                <span>{paymentData?.clientId?.name || paymentData?.name || "N/A"}</span>
               </div>
               <div className="flex justify-between">
                 <span>Email</span>
-                <span>{paymentData?.email || "N/A"}</span>
+                <span>{paymentData?.clientId?.email || paymentData?.email || "N/A"}</span>
               </div>
               <div className="flex justify-between">
                 <span>Amount</span>
