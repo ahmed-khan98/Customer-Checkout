@@ -85,10 +85,13 @@
 
 import ErrorState from "./ErrorState";
 import PaymentDetailPayPal from "./PaymentDetailPayPal";
+import PaymentDetailStripe from "./PaymentDetailStripe";
 import PaidPaymentLink from "./PaidPaymentLink";
 import PaymentLinkDisabled from "./PaymentLinkDisabled";
 import PaymentOrderSummary from "./PaymentOrderSummary";
 import PaymentPagHeader from "./PaymentPagHeader";
+
+const isStripeMerchant = (type) => type === "Stripe" || type === "stripe";
 
 async function getPaymentData(id) {
   const res = await fetch(
@@ -181,12 +184,32 @@ const PaymentDetail = async ({ id, searchParams }) => {
   if (paymentData?.isActive === false)
     return <PaymentLinkDisabled paymentData={paymentData} />;
 
+  const useStripe = isStripeMerchant(paymentData?.merchantType);
+
+  const paymentCheckout = (position) =>
+    useStripe ? (
+      <PaymentDetailStripe
+        position={position}
+        id={paymentData?._id}
+        stripePublishableKey={paymentData?.stripePublishableKey}
+        currency={paymentData?.currency}
+      />
+    ) : (
+      <PaymentDetailPayPal
+        position={position}
+        id={paymentData?._id}
+        paypalClientId={paymentData?.paypalClientId}
+        brandParam={brandParam}
+        currency={paymentData?.currency}
+      />
+    );
+
   return (
-    <div className="min-h-screenfont-sans text-slate-900">
+    <div className="min-h-screen font-sans text-slate-900">
       {/* Top Brand Bar - Loads dynamic logo natively */}
       <PaymentPagHeader image={paymentData?.brandId?.image} />
 
-      <main className="max-w-5xl mx-auto sm:px-2 px-4 overflow-visible">
+      <main className="max-w-5xl mx-auto sm:px-2 px-4 overflow-visible pt-4">
         <div className="grid lg:grid-cols-12 gap-8 items-start relative h-[calc(100vh-80px)]">
           {/* LEFT: Invoice Summary */}
           <div className="lg:col-span-7 lg:h-full lg:overflow-y-auto space-y-4">
@@ -209,27 +232,13 @@ const PaymentDetail = async ({ id, searchParams }) => {
               description={paymentData?.description}
             />
 
-            <div className="block lg:hidden">
-              <PaymentDetailPayPal
-                position="mobile"
-                id={paymentData?._id}
-                paypalClientId={paymentData?.paypalClientId}
-                brandParam={brandParam}
-                currency={paymentData?.currency}
-              />
-            </div>
+            <div className="block lg:hidden">{paymentCheckout("mobile")}</div>
           </div>
 
           {/* RIGHT: Payment Options */}
           <aside className="hidden lg:flex lg:col-span-5 flex-col sticky top-6 h-[calc(100vh-100px)]">
             <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar cursor-pointer">
-              <PaymentDetailPayPal
-                position="desktop"
-                id={paymentData?._id}
-                paypalClientId={paymentData?.paypalClientId}
-                brandParam={brandParam}
-                currency={paymentData?.currency}
-              />
+              {paymentCheckout("desktop")}
             </div>
           </aside>
         </div>

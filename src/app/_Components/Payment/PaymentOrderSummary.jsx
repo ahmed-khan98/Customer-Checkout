@@ -22,7 +22,7 @@ const PaymentOrderSummary = ({
   return (
     <>
       <section className="bg-white rounded-2xl shadow-md border border-zinc-200 overflow-visible">
-        <div className="flex items-center gap-2.5 px-5 py-4 bg-zinc-50 rounded-t-2xl border-b border-zinc-100">
+        <div className="flex items-center gap-2.5 px-5 py-3 bg-zinc-50 rounded-t-2xl border-b border-zinc-100">
           <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-zinc-800">
             <Receipt className="w-4 h-4 text-white" />
           </div>
@@ -38,25 +38,23 @@ const PaymentOrderSummary = ({
 
         <div className="space-y-1">
           {!isMasterPayemntLink && (
-            <div className=" p-4 grid grid-cols-1 sm:grid-cols-2 gap-y-3 border-b border-zinc-100">
+            <div className="p-3 grid grid-cols-1 sm:grid-cols-[minmax(0,0.85fr)_minmax(0,1.35fr)] gap-y-2 gap-x-3 border-b border-zinc-100 overflow-visible">
               {/* Agar name or email null/falsy hain to component hide ho jaye ga */}
               {name && <DetailRow label="Customer" value={name} />}
-
               {email && (
                 <DetailRow
                   label="Email"
                   value={email}
-                  className="lowercase break-all"
+                  className="lowercase normal-case whitespace-nowrap text-[12px] tracking-tight"
                 />
               )}
-
               {brand && <DetailRow label="Brand" value={brand} />}
               {currency && <DetailRow label="Currency" value={currency} />}
             </div>
           )}
 
           <div className={!isMasterPayemntLink ? "px-4 py-2" : "p-6"}>
-            <p className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-500 mb-2 uppercase tracking-wider">
+            <p className="flex items-center gap-1.5 text-[11px] font-medium text-slate-600 mb-2 uppercase tracking-wider">
               <Tag className="w-3 h-3" /> Services Provided
             </p>
             <div className="flex flex-wrap gap-1.5">
@@ -83,11 +81,11 @@ const PaymentOrderSummary = ({
           </div>
           {(!isMasterPayemntLink && description) && (
             <div className="px-4 py-3 border-t border-zinc-100">
-              <p className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-500 mb-2 uppercase tracking-widest">
+              <p className="flex items-center gap-1 text-[11px] font-medium text-slate-600 mb-2 uppercase tracking-widest">
                 <FileText className="w-3 h-3" /> Description
               </p>
 
-              <p className="text-[12px] text-zinc-600 leading-relaxed whitespace-pre-wrap bg-zinc-50 border border-zinc-200 rounded-xl px-3 py-2.5">
+              <p className="text-[11px] text-zinc-600 leading-relaxed whitespace-pre-wrap bg-zinc-50 border border-zinc-200 rounded-xl px-3 py-2.5">
                 {description}
               </p>
             </div>
@@ -95,7 +93,7 @@ const PaymentOrderSummary = ({
         </div>
 
         {/* Total Display */}
-        <div className="p-6 bg-zinc-900 text-white flex justify-between items-center rounded-2xl">
+        <div className="p-5 bg-zinc-900 text-white flex justify-between items-center rounded-2xl">
           <div>
             <p className="text-zinc-300 text-xs uppercase font-bold tracking-widest">
               Total Amount Due

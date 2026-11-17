@@ -5,8 +5,8 @@ import Image from "next/image";
 
 const PaymentPagHeader = ({ image }) => {
   return (
-    <div className="bg-white border-b border-slate-200 py-2.5 px-6 mb-6">
-           <div className="max-w-5xl mx-auto flex justify-between items-center h-10">
+    <div className="bg-white border-b border-slate-200 py-1 px-6 ">
+           <div className="max-w-5xl mx-auto flex justify-between items-center h-16">
              {image && (
               <Image
                 src={image}
